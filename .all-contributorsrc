@@ -1,0 +1,30 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "rpothin",
+      "name": "Raphael Pothin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23240245?v=4",
+      "profile": "https://www.polywork.com/rpothin",
+      "contributions": [
+        "ideas",
+        "code",
+        "content",
+        "doc",
+        "maintenance",
+        "projectManagement",
+        "test"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Power-Platform-Notebooks",
+  "projectOwner": "rpothin",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}

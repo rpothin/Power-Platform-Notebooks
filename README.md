@@ -1,4 +1,7 @@
 <p align="center">
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
     <h1 align="center">
         Power Platform Notebook Templates
     </h1>
@@ -76,9 +79,15 @@ Thanks to the following people who have contributed to this project:
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://www.polywork.com/rpothin"><img src="https://avatars.githubusercontent.com/u/23240245?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Raphael Pothin</b></sub></a><br /><a href="#ideas-rpothin" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/rpothin/Power-Platform-Notebooks/commits?author=rpothin" title="Code">💻</a> <a href="#content-rpothin" title="Content">🖋</a> <a href="https://github.com/rpothin/Power-Platform-Notebooks/commits?author=rpothin" title="Documentation">📖</a> <a href="#maintenance-rpothin" title="Maintenance">🚧</a> <a href="#projectManagement-rpothin" title="Project Management">📆</a> <a href="https://github.com/rpothin/Power-Platform-Notebooks/commits?author=rpothin" title="Tests">⚠️</a></td>
+  </tr>
+</table>
 
-<!-- markdownlint-enable -->
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 > *This project follows the [all-contributors](https://allcontributors.org/docs/en/specification) specification. Everyone who would like to contribute to it is welcome!*
@@ -94,3 +103,15 @@ We would like to thank the open-source projects below that helped us find some i
 - [dotnet/interactive](https://github.com/dotnet/interactive) - *for the .Net Interactive notebooks*
 - [microsoft/PowerPlatform-DataverseServiceClient](https://github.com/microsoft/PowerPlatform-DataverseServiceClient) - *for the **Microsoft.PowerPlatform.Dataverse.Client** nuget packages*
 - [microsoft/PowerApps-Samples/](https://github.com/microsoft/PowerApps-Samples/) - *for the code samples showing how to interact with Power Apps / Dataverse*
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

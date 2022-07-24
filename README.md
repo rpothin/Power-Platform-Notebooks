@@ -1,6 +1,3 @@
-# Power-Platform-Notebooks
-Notebook templates for support, administration, learning, training... related to Power Platform.
-
 <p align="center">
     <h1 align="center">
         Power Platform Notebook Templates

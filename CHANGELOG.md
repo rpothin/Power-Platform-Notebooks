@@ -24,7 +24,7 @@ All notable changes to this repository will be documented in this file.
 
 ## [0.1.0] - 2022-07-27-->
 
-> Initialize this repository template to promote notebooks in the Power Platform context 😊
+> Initialize this repository to empower Power Platform developers with notebooks 😊
 
 ### 🚀 Added
 

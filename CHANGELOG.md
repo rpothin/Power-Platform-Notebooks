@@ -31,6 +31,5 @@ All notable changes to this repository will be documented in this file.
 - Core files of the repository: README.md, LICENSE, CONTRIBUTING.md and CODE_OF_CONDUCT.md
 - [AllContributors](https://allcontributors.org/) GitHub app
 - Issue and pull request templates
-- Sample of Power Platform solution used for the tests
 
 [⚒ Work in progress]: https://github.com/rpothin/Power-Platform-Notebooks

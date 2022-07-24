@@ -1,0 +1,55 @@
+name: Bug Report
+description: Create a bug report to help us improve the quality of the notebook templates in this repository
+title: "[Bug] <Title>"
+labels: [bug, triage]
+assignees:
+  - rpothin
+body:
+  - type: textarea
+    id: notebooks
+    attributes:
+      label: Notebook(s)
+      description: Please, give us the list of the notebook templates where your are facing the issue.
+      placeholder: "ex: Learning/WhoAmI.dib, '...'"
+    validations:
+      required: true
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug Description
+      description: Please, give us a good overview of the bug your are facing.
+      placeholder: "ex: When I click on Button A I get the following error message '...'"
+    validations:
+      required: true
+  - type: textarea
+    id: to-reproduce
+    attributes:
+      label: Steps To Reproduce
+      description: Please, share with us the exact steps to be able to reproduce the issue.
+      placeholder: "1. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: Please, tell us what you would expect to happen in this situation.
+      placeholder: "ex: When I click on Button A it calls the service without error..."
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+    validations:
+      required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/rpothin/Power-Platform-Notebooks/blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

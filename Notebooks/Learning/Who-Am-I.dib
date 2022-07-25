@@ -1,0 +1,79 @@
+#!markdown
+
+# Power Platform Notebook - Learning - Who Am I
+
+**Goal:** Present how to run an **WhoAmI** request and to retrieve user's full name and email address from a .Net Interactive notebook using the [**Microsoft.PowerPlatform.Dataverse.Client**](https://docs.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client?view=dataverse-sdk-latest) NuGet package.
+
+## Initialize notebook
+
+#!csharp
+
+// Define NuGet source
+#i "nuget:https://api.nuget.org/v3/index.json"
+
+// Import latest version of NuGet packages
+#r "nuget:Microsoft.PowerPlatform.Dataverse.Client"
+#r "nuget:Microsoft.Xrm.Sdk"
+
+// Declare namespaces we will use in the notebook
+// Namespaces to work with Power Platform / Dataverse
+using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+
+#!markdown
+
+### Initialize parameters
+
+> ⚠ You need to set the parameters below to be able to use this .Net Interactive notebook.
+
+#!csharp
+
+string environmentUrl = "https://your-environment-domain-name.crm3.dynamics.com/"; // Used to connet to the environment
+
+#!markdown
+
+## Connect to the considered environment
+
+> ⚠ Use your own account during the interactive authentication process.
+
+#!csharp
+
+// Create a connexion (service client) for the considered environment
+string connectionString = "AuthType=OAuth;Url=" + environmentUrl + ";RedirectUri=http://localhost;LoginPrompt=Auto";
+ServiceClient serviceClient = new(connectionString);
+
+#!markdown
+
+## Get user's full name and email address
+
+#!markdown
+
+### Get logged on user's ID with an WhoAmI request
+
+#!csharp
+
+// Send a WhoAmI request to obtain information about the logged on user
+WhoAmIResponse whoAmIResponse = new WhoAmIResponse();
+whoAmIResponse = (WhoAmIResponse)serviceClient.Execute(new WhoAmIRequest());
+
+string userId = whoAmIResponse.UserId.ToString();
+Console.WriteLine($"User ID is {userId}.");
+
+#!markdown
+
+### Get logged on user's full name and email address 
+
+#!csharp
+
+// Convert userId string to Guid
+Guid userGuid = new Guid(userId);
+
+// Get the user's full name and email address
+Entity user = serviceClient.Retrieve("systemuser", userGuid, new ColumnSet("fullname", "domainname"));
+
+// Write user's full name and email address to the console
+Console.WriteLine("User's details below:");
+Console.WriteLine($"* Full name: {user.GetAttributeValue<string>("fullname")}");
+Console.WriteLine($"* Email address: {user.GetAttributeValue<string>("domainname")}");

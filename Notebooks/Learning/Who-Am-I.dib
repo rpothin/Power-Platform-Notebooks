@@ -26,7 +26,7 @@ using Microsoft.Xrm.Sdk.Query;
 
 ### Initialize parameters
 
-> ⚠ You need to set the parameters below to be able to use this .Net Interactive notebook.
+> ⚠ **Warning:** You need to set the parameters below to be able to use this .Net Interactive notebook.
 
 #!csharp
 
@@ -36,7 +36,7 @@ string environmentUrl = await GetInputAsync("Enter Environment URL (e.g. https:/
 
 ## Connect to the considered environment
 
-> ⚠ Use your own account during the interactive authentication process.
+> ⚠ **Warning:** Use your own account during the interactive authentication process.
 
 #!csharp
 

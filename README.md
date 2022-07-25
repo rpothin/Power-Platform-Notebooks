@@ -17,17 +17,17 @@
 </p>
 
 <p align="center">
+    <a href="#contributors" alt="Contributors">
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+        <img src="https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square" />
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+    </a>
     <a href="#watchers" alt="Watchers">
         <img src="https://img.shields.io/github/watchers/rpothin/Power-Platform-Notebooks?style=social" /></a>
     <a href="#forks" alt="Forks">
         <img src="https://img.shields.io/github/forks/rpothin/Power-Platform-Notebooks?style=social" /></a>
     <a href="#stars" alt="Stars">
         <img src="https://img.shields.io/github/stars/rpothin/Power-Platform-Notebooks?style=social" /></a>
-    <a href="#contributors" alt="Contributors">
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-        <img src="https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square" />
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-    </a>
 </p>
 
 <h3 align="center">

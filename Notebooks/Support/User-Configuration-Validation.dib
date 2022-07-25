@@ -1,0 +1,182 @@
+#!markdown
+
+# Power Platform Notebook - Support - User Configuration Validation
+
+**Goal:** Validate that the configuration of a given user is as expected.
+
+## Initialize notebook
+
+#!csharp
+
+// Define NuGet source
+#i "nuget:https://api.nuget.org/v3/index.json"
+
+// Import latest version of NuGet packages
+#r "nuget:Microsoft.PowerPlatform.Dataverse.Client"
+#r "nuget:Microsoft.Xrm.Sdk"
+
+// Declare namespaces we will use in the notebook
+// Namespaces to work with Power Platform / Dataverse
+using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+
+#!markdown
+
+### Initialize parameters
+
+> ⚠ **Warning:** You need to set the parameters below to be able to use this .Net Interactive notebook.
+
+> 📢 **Advice:** Play each cell below one at a time if you want to copy-paste values.
+
+#!csharp
+
+string environmentUrl = await GetInputAsync("Enter Environment URL (e.g. https://your-environment-domain-name.crm3.dynamics.com/)"); // Used to connet to the environment
+
+#!csharp
+
+string userDomainName = await GetInputAsync("User Domain Name (e.g. raphael.pothin@contoso.com)"); // Used to get the configuration of the corresponding user for the given environment
+
+#!markdown
+
+## Connect to the considered environment
+
+> ⚠ **Warning:** Use your own account during the interactive authentication process.
+
+#!csharp
+
+// Create a connexion (service client) for the considered environment
+string connectionString = "AuthType=OAuth;Url=" + environmentUrl + ";RedirectUri=http://localhost;LoginPrompt=Auto";
+ServiceClient serviceClient = new(connectionString);
+
+#!markdown
+
+## Get considered user's information
+
+### Search a user based on the provided domain name
+
+#!csharp
+
+// Variables
+string userDomainName = "raphael.pothin@bizappsfrenchcommunity.com";
+string userId = "";
+
+// Build query expression
+QueryExpression queryUsersBasedOnDomainName = new QueryExpression {
+    EntityName = "systemuser",
+    ColumnSet = new ColumnSet("systemuserid","fullname","domainname"),
+    Criteria = new FilterExpression {
+        Conditions = {
+            new ConditionExpression("domainname", ConditionOperator.Equal, userDomainName)
+        }
+    }
+};
+
+// Retrieve users based on domain name provided
+EntityCollection users = serviceClient.RetrieveMultiple(queryUsersBasedOnDomainName);
+
+// Count of users found
+int numberOfUsersFound = users.Entities.Count;
+
+Console.WriteLine($"{numberOfUsersFound} users found for the following domain name: {userDomainName}");
+
+#!pwsh
+
+#!share --from csharp numberOfUsersFound
+#!share --from csharp users
+
+# If only one user found, display its configuration
+if ($numberOfUsersFound -eq 1) {
+    # Initialize an object for the user's details
+    $userDetails = [PSCustomObject]@{}
+    
+    # Get user from users variable (first element)
+    $firstUserAttributes = $users.Entities[0].Attributes | ConvertTo-Json | ConvertFrom-Json
+
+    # Get user's attributes
+    foreach ($attribute in $firstUserAttributes) {
+        $attributeKey = $attribute.Key
+        $attributeValue = $attribute.Value
+
+        $userDetails | Add-Member -MemberType NoteProperty -Name $attributeKey -Value $attributeValue
+    }
+
+    # Display user's information
+    echo "User details:"
+    $userDetails
+}
+# If more than one user found, display a list of them
+elseif ($numberOfUsersFound -gt 1) {
+    echo "Found ${numberOfUsersFound} users:"
+}
+# If no user found, display an error message
+else {
+    echo "No user found"
+}
+
+#!markdown
+
+### Get considered user's security roles
+
+#!csharp
+
+// Variables
+string securityRolesFetchXml = $@"
+<fetch version='1.0' mapping='logical' distinct='false'>
+  <entity name='systemuser'>
+    <link-entity name='systemuserroles' to='systemuserid' from='systemuserid' alias='ur' link-type='outer'>
+      <link-entity name='role' to='roleid' from='roleid' alias='r' link-type='outer'>
+        <attribute name='name' />
+        <link-entity name='businessunit' to='businessunitid' from='businessunitid' alias='bu' link-type='outer'>
+          <attribute name='name' />
+        </link-entity>  
+      </link-entity>
+    </link-entity>
+    <filter>
+      <condition attribute='systemuserid' operator='eq' value='{{0}}' />
+    </filter>
+  </entity>
+</fetch>";
+
+// Put the ID of the user found in the Fetch XML expression
+FetchExpression securityRolesQuery = new FetchExpression(string.Format(securityRolesFetchXml, userId));
+
+// Query the user security roles
+EntityCollection securityRolesResults = serviceClient.RetrieveMultiple(securityRolesQuery);
+
+// Count of security roles found
+int securityRolesCount = securityRolesResults.Entities.Count;
+
+#!pwsh
+
+#!share --from csharp securityRolesCount
+#!share --from csharp securityRolesResults
+
+# If security roles found, display them
+if ($securityRolesCount -gt 0) {
+    # Initialize an object for the user's security roles details
+    $userSecurityRolesDetails = @()
+
+    foreach ($securityRoleDetails in $securityRolesResults.Entities) {
+        # Initialize an object for the details of one security role
+        $userSecurityRoleDetails = [PSCustomObject]@{}
+
+        # Get security role name
+        $securityRoleName = $securityRoleDetails.Attributes["r.name"].Value
+        $userSecurityRoleDetails | Add-Member -MemberType NoteProperty -Name "Security Role Name" -Value $securityRoleName
+        
+        # Get security role business unit name
+        $securityRoleBusinessUnit = $securityRoleDetails.Attributes["bu.name"].Value
+        $userSecurityRoleDetails | Add-Member -MemberType NoteProperty -Name "Business Unit Name" -Value $securityRoleBusinessUnit
+
+        $userSecurityRolesDetails += $userSecurityRoleDetails
+    }
+
+    echo "Security roles found for the considered user:"
+    $userSecurityRolesDetails
+}
+# If no security role found, display a message
+else {
+    echo "No security roles found for the considered user."
+}

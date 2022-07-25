@@ -28,8 +28,11 @@ All notable changes to this repository will be documented in this file.
 
 ### 🚀 Added
 
-- Core files of the repository: README.md, LICENSE, CONTRIBUTING.md and CODE_OF_CONDUCT.md
-- [AllContributors](https://allcontributors.org/) GitHub app
+- Core files of the repository: README.md, LICENSE, CONTRIBUTING.md, CODE_OF_CONDUCT.md and CHANGELOG.md
+- [AllContributors](https://allcontributors.org/) GitHub app (*with .all-contributorsrc file*)
 - Issue and pull request templates
+- **Notebooks** folder with a README file to describe its organization and reference interesting external notebooks and two subfolders: **Learning** and **Support**
+- **Who-Am-I.dib** notebook in the **Learning** category
+- **User-Configuration-Validation** notebook in the **Support** category
 
 [⚒ Work in progress]: https://github.com/rpothin/Power-Platform-Notebooks

@@ -6,6 +6,17 @@
 
 ## Organization
 
-| **Folder** | **Description** |
-| -- | -- |
-| Learning | For the notebooks that will help people learn how to user notebooks in Power Platform context or other concepts related to Power Platform (*like how to use the [**Microsoft.PowerPlatform.Dataverse.Client**](https://docs.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client?view=dataverse-sdk-latest) NuGet package*) |
+| **Folder**     | **Description**                                                                                                                                                                                                                                                                                                                            |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Learning       | For notebooks that will help people learn how to user notebooks in Power Platform context or other concepts related to Power Platform (*like how to use the [**Microsoft.PowerPlatform.Dataverse.Client**](https://docs.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client?view=dataverse-sdk-latest) NuGet package*) |
+| Support        | For notebooks that could directly be used by you or your team for support tasks (*like the verification of the configuration of a user in case of access issues*)                                                                                                                                                                          |
+| Administration | For notebooks that could directly be used by you or your team for administrative tasks (*like create and configure a new Azure AD Security Group Team in an environment*)                                                                                                                                                                  |
+
+## External notebooks
+
+### Learning
+
+| **Link**                                                                                                                                     | **Description**                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| [rajyraman/Dataverse-Interactive-Notebook](https://github.com/rajyraman/Dataverse-Interactive-Notebook/blob/main/Dataverse%20Notebook.ipynb) | "This notebook demonstrates how you can use interactive notebooks with PowerPlatform .net core assembly" |
+| [rajyraman/Playwright-Dataverse-Notebook](https://github.com/rajyraman/Playwright-Dataverse-Notebook/blob/main/notebooks/playwright.ipynb)   | Notebook that demonstrates how to use Playwright with a model driven app                                 |

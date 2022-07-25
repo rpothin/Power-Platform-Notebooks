@@ -1,7 +1,4 @@
 <p align="center">
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
     <h1 align="center">
         Power Platform Notebook Templates
     </h1>
@@ -26,6 +23,11 @@
         <img src="https://img.shields.io/github/forks/rpothin/Power-Platform-Notebooks?style=social" /></a>
     <a href="#stars" alt="Stars">
         <img src="https://img.shields.io/github/stars/rpothin/Power-Platform-Notebooks?style=social" /></a>
+    <a href="#contributors" alt="Contributors">
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+        <img src="https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square" />
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+    </a>
 </p>
 
 <h3 align="center">
@@ -103,15 +105,3 @@ We would like to thank the open-source projects below that helped us find some i
 - [dotnet/interactive](https://github.com/dotnet/interactive) - *for the .Net Interactive notebooks*
 - [microsoft/PowerPlatform-DataverseServiceClient](https://github.com/microsoft/PowerPlatform-DataverseServiceClient) - *for the **Microsoft.PowerPlatform.Dataverse.Client** nuget packages*
 - [microsoft/PowerApps-Samples/](https://github.com/microsoft/PowerApps-Samples/) - *for the code samples showing how to interact with Power Apps / Dataverse*
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

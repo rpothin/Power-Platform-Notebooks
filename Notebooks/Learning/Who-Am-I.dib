@@ -30,7 +30,7 @@ using Microsoft.Xrm.Sdk.Query;
 
 #!csharp
 
-string environmentUrl = "https://your-environment-domain-name.crm3.dynamics.com/"; // Used to connet to the environment
+string environmentUrl = await GetInputAsync("Enter Environment URL (e.g. https://your-environment-domain-name.crm3.dynamics.com/)"); // Used to connet to the environment
 
 #!markdown
 
@@ -59,7 +59,7 @@ WhoAmIResponse whoAmIResponse = new WhoAmIResponse();
 whoAmIResponse = (WhoAmIResponse)serviceClient.Execute(new WhoAmIRequest());
 
 string userId = whoAmIResponse.UserId.ToString();
-Console.WriteLine($"User ID is {userId}.");
+Console.WriteLine($"User ID is: {userId}.");
 
 #!markdown
 
@@ -75,5 +75,27 @@ Entity user = serviceClient.Retrieve("systemuser", userGuid, new ColumnSet("full
 
 // Write user's full name and email address to the console
 Console.WriteLine("User's details below:");
-Console.WriteLine($"* Full name: {user.GetAttributeValue<string>("fullname")}");
-Console.WriteLine($"* Email address: {user.GetAttributeValue<string>("domainname")}");
+Console.WriteLine($"    * Full name: {user.GetAttributeValue<string>("fullname")}");
+Console.WriteLine($"    * Email address: {user.GetAttributeValue<string>("domainname")}");
+
+#!markdown
+
+### Improve console output with PowerShell
+
+#!pwsh
+
+#!share --from csharp userId
+#!share --from csharp user
+
+# Extract user's full name and domain name from user variable
+$userFullName = $user.Attributes["fullname"]
+$userDomainName = $user.Attributes["domainname"]
+
+# Initialize an object for the user's information
+$user = [PSCustomObject]@{}
+$user | Add-Member -MemberType NoteProperty -Name "ID" -Value $userId
+$user | Add-Member -MemberType NoteProperty -Name "Full Name" -Value $userFullName
+$user | Add-Member -MemberType NoteProperty -Name "Domain Name" -Value $userDomainName
+
+# Display user's information
+$user

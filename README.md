@@ -105,3 +105,4 @@ We would like to thank the open-source projects below that helped us find some i
 - [dotnet/interactive](https://github.com/dotnet/interactive) - *for the .Net Interactive notebooks*
 - [microsoft/PowerPlatform-DataverseServiceClient](https://github.com/microsoft/PowerPlatform-DataverseServiceClient) - *for the **Microsoft.PowerPlatform.Dataverse.Client** nuget packages*
 - [microsoft/PowerApps-Samples/](https://github.com/microsoft/PowerApps-Samples/) - *for the code samples showing how to interact with Power Apps / Dataverse*
+- [rajyraman/Dataverse-Interactive-Notebook](https://github.com/rajyraman/Dataverse-Interactive-Notebook) - *for the great exploratory work on notebooks in Power Platform context [Natraj Yegnaraman](https://twitter.com/RajYRaman) has done*

@@ -40,14 +40,95 @@ string userDomainName = await GetInputAsync("User Domain Name (e.g. raphael.poth
 
 #!markdown
 
+### Connection string additional parameters
+
+> 📝 **Note:** It is to cover scenarios where you are using GitHub Codespaces and can't have the interactive login experience.
+
+#!csharp
+
+string additionalConnectionStringParameters = "" ; // Used to connet to the environment when interactive login experience not available
+string nonInteractiveConnectionMethod = "clientid"; // Define which information will be asked in the following steps: "" or username or clientid
+
+if (nonInteractiveConnectionMethod == "") {
+    additionalConnectionStringParameters = ";AuthType=OAuth";
+}
+
+#!markdown
+
+#### User name and Password
+
+> ⚠ **Warning:** Please use your own account to improve the traceability of the actions.
+
+#!csharp
+
+string userName = ""; // Used for connection string additional parameters when interactive login experience not available
+
+if (nonInteractiveConnectionMethod == "username") {
+    try {
+        userName = await GetInputAsync("Enter your user name (e.g. rpothin@contoso.com)");
+    }
+    catch { /* Do nothing */ }
+}
+
+#!csharp
+
+string password = ""; // Used for connection string additional parameters when interactive login experience not available
+
+if (nonInteractiveConnectionMethod == "username") {
+    try {
+        password = await GetInputAsync("Enter your password (e.g. passcode)");
+    }
+    catch { /* Do nothing */ }
+}
+
+#!csharp
+
+if (nonInteractiveConnectionMethod == "username") {
+    additionalConnectionStringParameters = userName != "" && password != "" ? $";AuthType=OAuth;Username={userName};Password={password}" : "" ; // In the case you use user name and password
+}
+
+#!markdown
+
+#### Client ID and Secret
+
+#!csharp
+
+string clientId = ""; // Used for connection string additional parameters when interactive login experience not available
+
+if (nonInteractiveConnectionMethod == "clientid") {
+    try {
+        clientId = await GetInputAsync("Enter a valid client ID (e.g. 51f81489-12ee-4a9e-aaae-a2591f45987d)");
+    }
+    catch { /* Do nothing */ }
+}
+
+#!csharp
+
+string secret = ""; // Used for connection string additional parameters when interactive login experience not available
+
+if (nonInteractiveConnectionMethod == "clientid") {
+    try {
+        secret = await GetInputAsync("Enter a valid secret corresponding to the client ID provided (e.g. clientsecret)");
+    }
+    catch { /* Do nothing */ }
+}
+
+#!csharp
+
+if (nonInteractiveConnectionMethod == "clientid") {
+    additionalConnectionStringParameters = clientId != "" && secret != "" ? $";AuthType=ClientSecret;ClientId={clientId};ClientSecret={secret}" : "" ; // In the case you use client id and secret
+}
+
+#!markdown
+
 ## Connect to the considered environment
 
-> ⚠ **Warning:** Use your own account during the interactive authentication process to improve the traceability of the actions
+> ⚠ **Warning:** In the case of an interacive authentication, please use your own account to improve the traceability of the actions.
 
 #!csharp
 
 // Create a connection (service client) for the considered environment
-string connectionString = "AuthType=OAuth;Url=" + environmentUrl + ";RedirectUri=http://localhost;LoginPrompt=Auto";
+string connectionString = $"Url={environmentUrl};RedirectUri=http://localhost;LoginPrompt=Auto{additionalConnectionStringParameters}";
 ServiceClient serviceClient = new(connectionString);
 
 #!markdown

@@ -135,6 +135,8 @@ ServiceClient serviceClient = new(connectionString);
 
 ## Get considered user's information
 
+#!markdown
+
 ### Get user's information
 
 #!csharp
@@ -199,8 +201,6 @@ int securityRolesCount = securityRolesResults.Entities.Count;
 
 #!share --from csharp numberOfUsersFound
 #!share --from csharp users
-#!share --from csharp securityRolesCount
-#!share --from csharp securityRolesResults
 
 # If only one user found, display its configuration
 if ($numberOfUsersFound -eq 1) {
@@ -231,8 +231,10 @@ else {
     echo "No user found"
 }
 
-# Add line for better readibility of the ouptuts
-echo "------------------------"
+#!pwsh
+
+#!share --from csharp securityRolesCount
+#!share --from csharp securityRolesResults
 
 # If security roles found, display them
 if ($securityRolesCount -gt 0) {

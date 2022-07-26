@@ -36,7 +36,7 @@ string environmentUrl = await GetInputAsync("Enter Environment URL (e.g. https:/
 
 #!csharp
 
- // Used to identify the user we want to validate the configuration
+// Used to identify the user we want to validate the configuration
 string userDomainName = await GetInputAsync("User Domain Name (e.g. raphael.pothin@contoso.com)");
 
 #!markdown

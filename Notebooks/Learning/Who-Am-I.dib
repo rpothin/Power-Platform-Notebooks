@@ -15,7 +15,6 @@
 #r "nuget:Microsoft.PowerPlatform.Dataverse.Client"
 #r "nuget:Microsoft.Xrm.Sdk"
 
-// Declare namespaces we will use in the notebook
 // Namespaces to work with Power Platform / Dataverse
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Crm.Sdk.Messages;
@@ -30,7 +29,8 @@ using Microsoft.Xrm.Sdk.Query;
 
 #!csharp
 
-string environmentUrl = await GetInputAsync("Enter Environment URL (e.g. https://your-environment-domain-name.crm3.dynamics.com/)"); // Used to connet to the environment
+// Used to identify the environment to connet to
+string environmentUrl = await GetInputAsync("Enter Environment URL (e.g. https://your-environment-domain-name.crm3.dynamics.com/)");
 
 #!markdown
 
@@ -40,8 +40,14 @@ string environmentUrl = await GetInputAsync("Enter Environment URL (e.g. https:/
 
 #!csharp
 
-string additionalConnectionStringParameters = "" ; // Used to connet to the environment when interactive login experience not available
-string nonInteractiveConnectionMethod = "clientid"; // Define which information will be asked in the following steps: "" or username or clientid
+// Used to add additional parameters to connet to the considered environment when interactive login experience not available
+string additionalConnectionStringParameters = "" ;
+
+// Definition of the method used for the autentication process: 
+//  - "": Interactive authentication
+//  - "username": Non interactive authentication with user name and password
+//  - "clientid": Non interactive authentication with client id and secret
+string nonInteractiveConnectionMethod = "clientid";
 
 if (nonInteractiveConnectionMethod == "") {
     additionalConnectionStringParameters = ";AuthType=OAuth";
@@ -55,7 +61,8 @@ if (nonInteractiveConnectionMethod == "") {
 
 #!csharp
 
-string userName = ""; // Used for connection string additional parameters when interactive login experience not available
+// Used for the user name value
+string userName = "";
 
 if (nonInteractiveConnectionMethod == "username") {
     try {
@@ -66,7 +73,8 @@ if (nonInteractiveConnectionMethod == "username") {
 
 #!csharp
 
-string password = ""; // Used for connection string additional parameters when interactive login experience not available
+// Used for the password value
+string password = "";
 
 if (nonInteractiveConnectionMethod == "username") {
     try {
@@ -77,8 +85,9 @@ if (nonInteractiveConnectionMethod == "username") {
 
 #!csharp
 
+// Build the additionalConnectionStringParameters value with the provided user name and password
 if (nonInteractiveConnectionMethod == "username") {
-    additionalConnectionStringParameters = userName != "" && password != "" ? $";AuthType=OAuth;Username={userName};Password={password}" : "" ; // In the case you use user name and password
+    additionalConnectionStringParameters = userName != "" && password != "" ? $";AuthType=OAuth;Username={userName};Password={password}" : "" ;
 }
 
 #!markdown
@@ -87,7 +96,8 @@ if (nonInteractiveConnectionMethod == "username") {
 
 #!csharp
 
-string clientId = ""; // Used for connection string additional parameters when interactive login experience not available
+// Used for the client id value
+string clientId = "";
 
 if (nonInteractiveConnectionMethod == "clientid") {
     try {
@@ -98,7 +108,8 @@ if (nonInteractiveConnectionMethod == "clientid") {
 
 #!csharp
 
-string secret = ""; // Used for connection string additional parameters when interactive login experience not available
+// Used for the secret value
+string secret = "";
 
 if (nonInteractiveConnectionMethod == "clientid") {
     try {
@@ -109,6 +120,7 @@ if (nonInteractiveConnectionMethod == "clientid") {
 
 #!csharp
 
+// Build the additionalConnectionStringParameters value with the provided client id and secret
 if (nonInteractiveConnectionMethod == "clientid") {
     additionalConnectionStringParameters = clientId != "" && secret != "" ? $";AuthType=ClientSecret;ClientId={clientId};ClientSecret={secret}" : "" ; // In the case you use client id and secret
 }

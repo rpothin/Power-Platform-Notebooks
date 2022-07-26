@@ -42,11 +42,11 @@ string userDomainName = await GetInputAsync("User Domain Name (e.g. raphael.poth
 
 ## Connect to the considered environment
 
-> ⚠ **Warning:** Use your own account during the interactive authentication process.
+> ⚠ **Warning:** Use your own account during the interactive authentication process to improve the traceability of the actions
 
 #!csharp
 
-// Create a connexion (service client) for the considered environment
+// Create a connection (service client) for the considered environment
 string connectionString = "AuthType=OAuth;Url=" + environmentUrl + ";RedirectUri=http://localhost;LoginPrompt=Auto";
 ServiceClient serviceClient = new(connectionString);
 

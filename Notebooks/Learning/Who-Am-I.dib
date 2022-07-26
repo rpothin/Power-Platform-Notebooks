@@ -2,7 +2,7 @@
 
 # Power Platform Notebook - Learning - Who Am I
 
-**Goal:** Present how to run an **WhoAmI** request and to retrieve user's full name and email address from a .Net Interactive notebook using the [**Microsoft.PowerPlatform.Dataverse.Client**](https://docs.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client?view=dataverse-sdk-latest) NuGet package.
+**Goal:** Present how to run an **WhoAmI** request and to retrieve user's full name and email address from a .Net Interactive notebook mainly using the [**Microsoft.PowerPlatform.Dataverse.Client**](https://docs.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client?view=dataverse-sdk-latest) NuGet package.
 
 ## Initialize notebook
 
@@ -36,11 +36,11 @@ string environmentUrl = await GetInputAsync("Enter Environment URL (e.g. https:/
 
 ## Connect to the considered environment
 
-> ⚠ **Warning:** Use your own account during the interactive authentication process.
+> ⚠ **Warning:** Use your own account during the interactive authentication process to improve the traceability of the actions.
 
 #!csharp
 
-// Create a connexion (service client) for the considered environment
+// Create a connection (service client) for the considered environment
 string connectionString = "AuthType=OAuth;Url=" + environmentUrl + ";RedirectUri=http://localhost;LoginPrompt=Auto";
 ServiceClient serviceClient = new(connectionString);
 

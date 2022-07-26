@@ -40,19 +40,24 @@
 
 ## 📢 What is the Power-Platform-Notebooks project?
 
-It is a **GitHub repository** that contains notebooks that can be used to empower Power Platform developers in some activities like: support, administration, learning, training...
+It is a **GitHub repository** that contains notebook templates that can be used to empower Power Platform developers in some activities like: support, administration, learning, training...
 
 ## 🚀 Goals
 
-> To define
+Become a key place to:
+
+- find notebook templates (*internal or external*) to interact with Power Platform
+- learn how to implement notebooks to interact with Power Platform
+- share ideas and good practices around notebooks to interact with Power Platform
 
 ### Non-goals
 
-> To define
+- Replace security notebooks implemented in solutions like [**Microsoft Sentinel Solution for Dynamics 365 CE Apps (Preview)**](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/sentinel4dynamics365.sentinel4dynamics365?tab=overview)
+- Store all notebooks implemented to interact with Power Platform - *if interesting notebooks are found or referenced we will add a link to where they are stored in the [Notebooks/README.md](Notebooks/README.md) file*
 
-## 📖 Documentation
+<!-- ## 📖 Documentation
 
-> To do
+> To do-->
 
 ## 📅 Roadmap
 
@@ -72,6 +77,7 @@ For more information, see [CONTRIBUTING.md](CONTRIBUTING.md)
 ### Not Sure Where to Start?
 
 If you want to participate to this project, but you are not sure how you can do it, do not hesitate to contact [@rpothin](https://github.com/rpothin):
+
 - By email at **raphael.pothin@gmail.com**
 - On [Twitter](https://twitter.com/RaphaelPothin)
 

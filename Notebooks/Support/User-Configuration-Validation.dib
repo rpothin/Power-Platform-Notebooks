@@ -135,13 +135,28 @@ ServiceClient serviceClient = new(connectionString);
 
 ## Get considered user's information
 
-### Search a user based on the provided domain name
+### Get user's information
 
 #!csharp
 
 // Variables
-string userDomainName = "raphael.pothin@bizappsfrenchcommunity.com";
 string userId = "";
+string securityRolesFetchXml = $@"
+<fetch version='1.0' mapping='logical' distinct='false'>
+  <entity name='systemuser'>
+    <link-entity name='systemuserroles' to='systemuserid' from='systemuserid' alias='ur' link-type='outer'>
+      <link-entity name='role' to='roleid' from='roleid' alias='r' link-type='outer'>
+        <attribute name='name' />
+        <link-entity name='businessunit' to='businessunitid' from='businessunitid' alias='bu' link-type='outer'>
+          <attribute name='name' />
+        </link-entity>  
+      </link-entity>
+    </link-entity>
+    <filter>
+      <condition attribute='systemuserid' operator='eq' value='{{0}}' />
+    </filter>
+  </entity>
+</fetch>";
 
 // Build query expression
 QueryExpression queryUsersBasedOnDomainName = new QueryExpression {
@@ -162,10 +177,30 @@ int numberOfUsersFound = users.Entities.Count;
 
 Console.WriteLine($"{numberOfUsersFound} users found for the following domain name: {userDomainName}");
 
+// Get the ID of the only user found
+if (numberOfUsersFound == 1) {
+    userId = users.Entities[0].Attributes["systemuserid"].ToString();
+}
+
+// Put the ID of the user found in the Fetch XML expression
+FetchExpression securityRolesQuery = new FetchExpression(string.Format(securityRolesFetchXml, userId));
+
+// Query the user security roles
+EntityCollection securityRolesResults = serviceClient.RetrieveMultiple(securityRolesQuery);
+
+// Count of security roles found
+int securityRolesCount = securityRolesResults.Entities.Count;
+
+#!markdown
+
+### Display user's configuration
+
 #!pwsh
 
 #!share --from csharp numberOfUsersFound
 #!share --from csharp users
+#!share --from csharp securityRolesCount
+#!share --from csharp securityRolesResults
 
 # If only one user found, display its configuration
 if ($numberOfUsersFound -eq 1) {
@@ -196,43 +231,8 @@ else {
     echo "No user found"
 }
 
-#!markdown
-
-### Get considered user's security roles
-
-#!csharp
-
-// Variables
-string securityRolesFetchXml = $@"
-<fetch version='1.0' mapping='logical' distinct='false'>
-  <entity name='systemuser'>
-    <link-entity name='systemuserroles' to='systemuserid' from='systemuserid' alias='ur' link-type='outer'>
-      <link-entity name='role' to='roleid' from='roleid' alias='r' link-type='outer'>
-        <attribute name='name' />
-        <link-entity name='businessunit' to='businessunitid' from='businessunitid' alias='bu' link-type='outer'>
-          <attribute name='name' />
-        </link-entity>  
-      </link-entity>
-    </link-entity>
-    <filter>
-      <condition attribute='systemuserid' operator='eq' value='{{0}}' />
-    </filter>
-  </entity>
-</fetch>";
-
-// Put the ID of the user found in the Fetch XML expression
-FetchExpression securityRolesQuery = new FetchExpression(string.Format(securityRolesFetchXml, userId));
-
-// Query the user security roles
-EntityCollection securityRolesResults = serviceClient.RetrieveMultiple(securityRolesQuery);
-
-// Count of security roles found
-int securityRolesCount = securityRolesResults.Entities.Count;
-
-#!pwsh
-
-#!share --from csharp securityRolesCount
-#!share --from csharp securityRolesResults
+# Add line for better readibility of the ouptuts
+echo "------------------------"
 
 # If security roles found, display them
 if ($securityRolesCount -gt 0) {
@@ -242,7 +242,7 @@ if ($securityRolesCount -gt 0) {
     foreach ($securityRoleDetails in $securityRolesResults.Entities) {
         # Initialize an object for the details of one security role
         $userSecurityRoleDetails = [PSCustomObject]@{}
-
+        
         # Get security role name
         $securityRoleName = $securityRoleDetails.Attributes["r.name"].Value
         $userSecurityRoleDetails | Add-Member -MemberType NoteProperty -Name "Security Role Name" -Value $securityRoleName

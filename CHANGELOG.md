@@ -22,7 +22,7 @@ All notable changes to this repository will be documented in this file.
 
 - ...
 
-## [0.1.0] - 2022-07-27-->
+## [0.1.0] - 2022-07-26-->
 
 > Initialize this repository to empower Power Platform developers with notebooks 😊
 
@@ -32,7 +32,7 @@ All notable changes to this repository will be documented in this file.
 - [AllContributors](https://allcontributors.org/) GitHub app (*with .all-contributorsrc file*)
 - Issue and pull request templates
 - **Notebooks** folder with a README file to describe its organization and reference interesting external notebooks and two subfolders: **Learning** and **Support**
-- **Who-Am-I.dib** notebook in the **Learning** category
-- **User-Configuration-Validation** notebook in the **Support** category
+- [**Who-Am-I.dib**](Notebooks/Learning/Who-Am-I.dib) notebook in the **Learning** category
+- [**User-Configuration-Validation**](Notebooks/Support/User-Configuration-Validation.dib) notebook in the **Support** category
 
 [⚒ Work in progress]: https://github.com/rpothin/Power-Platform-Notebooks

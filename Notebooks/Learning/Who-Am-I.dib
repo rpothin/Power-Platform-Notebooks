@@ -51,6 +51,8 @@ if (nonInteractiveConnectionMethod == "") {
 
 #### User name and Password
 
+> ⚠ **Warning:** Please use your own account to improve the traceability of the actions.
+
 #!csharp
 
 string userName = ""; // Used for connection string additional parameters when interactive login experience not available
@@ -115,7 +117,7 @@ if (nonInteractiveConnectionMethod == "clientid") {
 
 ## Connect to the considered environment
 
-> ⚠ **Warning:** Use your own account during the interactive authentication process to improve the traceability of the actions.
+> ⚠ **Warning:** In the case of an interacive authentication, please use your own account to improve the traceability of the actions.
 
 #!csharp
 

@@ -2,16 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.238.1/containers/powershell
 {
 	"name": "Power Platform .Net Interactive Notebooks",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": { 
-			// Update 'VARIANT' to pick a .NET Core version: 3.1, 6.0
-			// Append -bullseye or -focal to pin to an OS version.
-			"VARIANT": "6.0",
-			// Options
-			"NODE_VERSION": "none"
-		}
-	},
+	"dockerFile": "Dockerfile",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -20,7 +11,8 @@
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"ms-dotnettools.csharp",
-				"ms-dotnettools.dotnet-interactive-vscode"
+				"ms-dotnettools.dotnet-interactive-vscode",
+				"microsoft-IsvExpTools.powerplatform-vscode"
 			]
 		}
 	},

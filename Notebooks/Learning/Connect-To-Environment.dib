@@ -1,0 +1,150 @@
+#!markdown
+
+# Power Platform Notebook - Learning - Connect to an environment
+
+**Goal:** Present the different ways to connect to an environment using
+- the [**Microsoft.PowerPlatform.Dataverse.Client**](https://docs.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client?view=dataverse-sdk-latest) NuGet package
+   - Interactive - *with opening of the Microsoft login page*
+   - Non interactive with user name and password
+   - Non interactive with client id and secret
+
+> This notebook will be the base for the notebooks requiring an authentication.
+
+#!markdown
+
+## Initialize notebook
+
+#!markdown
+
+### NuGet packages and namespaces
+
+#!csharp
+
+// Define NuGet source
+#i "nuget:https://api.nuget.org/v3/index.json"
+
+// Import latest version of NuGet packages
+#r "nuget:Microsoft.PowerPlatform.Dataverse.Client"
+#r "nuget:Microsoft.Xrm.Sdk"
+
+// Namespaces to work with Power Platform / Dataverse
+using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+
+#!markdown
+
+### Initialize parameters
+
+> ⚠ **Warning:** You need to set the parameters below to be able to use this .Net Interactive notebook.
+
+#!csharp
+
+// Used to identify the environment to connet to
+string environmentUrl = await GetInputAsync("Enter Environment URL (e.g. https://your-environment-domain-name.crm3.dynamics.com/)");
+
+#!markdown
+
+#### Connection string additional parameters
+
+> 📝 **Note:** It is to cover scenarios where you are using GitHub Codespaces and can't have the interactive login experience.
+
+#!csharp
+
+// Used to add additional parameters to connet to the considered environment when interactive login experience not available
+string additionalConnectionStringParameters = "" ;
+
+// Definition of the method used for the autentication process: 
+//  - "": Interactive authentication
+//  - "username": Non interactive authentication with user name and password
+//  - "clientid": Non interactive authentication with client id and secret
+string nonInteractiveConnectionMethod = "clientid";
+
+if (nonInteractiveConnectionMethod == "") {
+    additionalConnectionStringParameters = ";AuthType=OAuth";
+}
+
+#!markdown
+
+##### User name and Password
+
+> ⚠ **Warning:** Please use your own account to improve the traceability of the actions.
+
+#!csharp
+
+// Used for the user name value
+string userName = "";
+
+if (nonInteractiveConnectionMethod == "username") {
+    try {
+        userName = await GetInputAsync("Enter your user name (e.g. rpothin@contoso.com)");
+    }
+    catch { /* Do nothing */ }
+}
+
+#!csharp
+
+// Used for the password value
+string password = "";
+
+if (nonInteractiveConnectionMethod == "username") {
+    try {
+        password = await GetInputAsync("Enter your password (e.g. passcode)");
+    }
+    catch { /* Do nothing */ }
+}
+
+#!csharp
+
+// Build the additionalConnectionStringParameters value with the provided user name and password
+if (nonInteractiveConnectionMethod == "username") {
+    additionalConnectionStringParameters = userName != "" && password != "" ? $";AuthType=OAuth;Username={userName};Password={password}" : "" ;
+}
+
+#!markdown
+
+##### Client ID and Secret
+
+#!csharp
+
+// Used for the client id value
+string clientId = "";
+
+if (nonInteractiveConnectionMethod == "clientid") {
+    try {
+        clientId = await GetInputAsync("Enter a valid client ID (e.g. 51f81489-12ee-4a9e-aaae-a2591f45987d)");
+    }
+    catch { /* Do nothing */ }
+}
+
+#!csharp
+
+// Used for the secret value
+string secret = "";
+
+if (nonInteractiveConnectionMethod == "clientid") {
+    try {
+        secret = await GetInputAsync("Enter a valid secret corresponding to the client ID provided (e.g. clientsecret)");
+    }
+    catch { /* Do nothing */ }
+}
+
+#!csharp
+
+// Build the additionalConnectionStringParameters value with the provided client id and secret
+if (nonInteractiveConnectionMethod == "clientid") {
+    additionalConnectionStringParameters = clientId != "" && secret != "" ? $";AuthType=ClientSecret;ClientId={clientId};ClientSecret={secret}" : "" ; // In the case you use client id and secret
+}
+
+#!markdown
+
+### Connect to the considered environment
+
+> ⚠ **Warning:** In the case of an interacive authentication (*through the Microsoft login page*), please use your own account to improve the traceability of the actions.
+
+#!csharp
+
+// Create a connection (service client) for the considered environment
+string connectionString = $"Url={environmentUrl};RedirectUri=http://localhost;LoginPrompt=Auto{additionalConnectionStringParameters}";
+ServiceClient serviceClient = new(connectionString);

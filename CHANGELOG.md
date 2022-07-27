@@ -35,5 +35,6 @@ All notable changes to this repository will be documented in this file.
 - **Notebooks** folder with a README file to describe its organization and reference interesting external notebooks and two subfolders: **Learning** and **Support**
 - [**Who-Am-I.dib**](Notebooks/Learning/Who-Am-I.dib) notebook in the **Learning** category
 - [**User-Configuration-Validation**](Notebooks/Support/User-Configuration-Validation.dib) notebook in the **Support** category
+- [**Base-Template**](Notebooks/Base-Template.dib) notebook that will be used for the creation of new notebooks
 
 [⚒ Work in progress]: https://github.com/rpothin/Power-Platform-Notebooks

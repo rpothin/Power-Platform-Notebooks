@@ -1,14 +1,11 @@
 #!markdown
 
-# Power Platform Notebook - Learning - Connect to an environment
+# Power Platform Notebook - Base template
 
-**Goal:** Present the different ways to connect to an environment using
-- the [**Microsoft.PowerPlatform.Dataverse.Client**](https://docs.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client?view=dataverse-sdk-latest) NuGet package
-   - Interactive - *with opening of the Microsoft login page*
-   - Non interactive with user name and password
-   - Non interactive with client id and secret
+**Goal:** Power Platform notebook base template with the points below cover to use for the creation of new notebooks.
 
-> This notebook will be the base for the notebooks requiring an authentication.
+- NuGet packages and namespaces configuration
+- Authentication to an environment using the [**Microsoft.PowerPlatform.Dataverse.Client**](https://docs.microsoft.com/en-us/dotnet/api/microsoft.powerplatform.dataverse.client?view=dataverse-sdk-latest) NuGet package
 
 #!markdown
 

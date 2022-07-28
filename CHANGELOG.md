@@ -20,9 +20,9 @@ All notable changes to this repository will be documented in this file.
 
 ### ❌ Deleted
 
-- ...
+- ...-->
 
-## [0.1.0] - 2022-07-26-->
+## [0.1.0] - 2022-07-28
 
 > Initialize this repository to empower Power Platform developers with notebooks 😊
 
@@ -35,6 +35,7 @@ All notable changes to this repository will be documented in this file.
 - **Notebooks** folder with a README file to describe its organization and reference interesting external notebooks and two subfolders: **Learning** and **Support**
 - [**Who-Am-I.dib**](Notebooks/Learning/Who-Am-I.dib) notebook in the **Learning** category
 - [**User-Configuration-Validation**](Notebooks/Support/User-Configuration-Validation.dib) notebook in the **Support** category
-- [**Base-Template**](Notebooks/Base-Template.dib) notebook that will be used for the creation of new notebooks
+- [**Base-Template**](Notebooks/Base-Template.dib) notebook that will be used for the creation of new notebooks with different ways to connect to an environment
 
-[⚒ Work in progress]: https://github.com/rpothin/Power-Platform-Notebooks
+[⚒ Work in progress]: https://github.com/rpothin/Power-Platform-Notebooks/v0.1.0...HEAD
+[0.1.0]: https://github.com/rpothin/PowerPlatform-ALM-With-GitHub-Template/releases/tag/v0.1.0

@@ -29,5 +29,6 @@ To be able to use the notebooks in this repository, you will need:
 
 | **Link**                                                                                                                                     | **Description**                                                                                          |
 | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| [rajyraman/polyglot-notebook-ideas](https://github.com/rpothin/Power-Platform-Notebooks)                                                     | "Experiments with Polyglot Notebooks" with great ideas like using SQL 4 CDS in a Notebook                |
 | [rajyraman/Dataverse-Interactive-Notebook](https://github.com/rajyraman/Dataverse-Interactive-Notebook/blob/main/Dataverse%20Notebook.ipynb) | "This notebook demonstrates how you can use interactive notebooks with PowerPlatform .net core assembly" |
 | [rajyraman/Playwright-Dataverse-Notebook](https://github.com/rajyraman/Playwright-Dataverse-Notebook/blob/main/notebooks/playwright.ipynb)   | Notebook that demonstrates how to use Playwright with a model driven app                                 |

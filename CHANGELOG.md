@@ -22,6 +22,10 @@ All notable changes to this repository will be documented in this file.
 
 - ...-->
 
+### 🚀 Added
+
+- New notebook to reset, restore and clean a Power Platform / Dataverse environment
+
 ## [0.1.0] - 2022-07-28
 
 > Initialize this repository to empower Power Platform developers with notebooks 😊

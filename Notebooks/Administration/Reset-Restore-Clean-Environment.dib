@@ -1,0 +1,9 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# Power Platform Notebook - Admininstration - Reset, Restore and Clean an Environment
+
+**Goal:** Reset, Restore and Clean a Power Platform / Dataverse environment to continue the work from a reference environment.

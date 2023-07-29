@@ -7,3 +7,76 @@
 # Power Platform Notebook - Admininstration - Reset, Restore and Clean an Environment
 
 **Goal:** Reset, Restore and Clean a Power Platform / Dataverse environment to continue the work from a reference environment.
+
+#!markdown
+
+## Prerequisites check
+
+### Power Platform CLI
+
+#!pwsh
+
+# Power Platform CLI -https://learn.microsoft.com/en-us/power-platform/developer/cli/introduction
+Write-Host "Checking if Power Platform CLI is installed..." -ForegroundColor Green
+
+try {
+    $powerPlatformCliVersion = pac help
+} catch {
+    Write-Host "Power Platform CLI does not seem installed. Installing..." -ForegroundColor Blue
+    dotnet tool install --global Microsoft.PowerApps.CLI.Tool
+}
+
+Write-Host "👍🏼 Power Platform CLI is installed!" -ForegroundColor Green
+
+#!markdown
+
+### NuGet packages and namespaces
+
+#!csharp
+
+// Define NuGet source
+#i "nuget:https://api.nuget.org/v3/index.json"
+
+// Import latest version of NuGet packages
+#r "nuget:Microsoft.PowerPlatform.Dataverse.Client"
+#r "nuget:Microsoft.Xrm.Sdk"
+
+// Namespaces to work with Power Platform / Dataverse
+using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+
+#!markdown
+
+## Set variables and connections
+
+### URL of the environment to reset, restore and clean
+
+#!csharp
+
+// Input prompt to get the URL of the environment to reset, restore and clean
+string environmentUrl = await GetInputAsync("Please enter the full URL of the environment to reset, restore and clean.");
+
+#!pwsh
+
+# Propagate the URL of the environment to reset, restore and clean to PowerShell
+#!set --name environmentUrl --value @csharp:environmentUrl
+
+#!markdown
+
+### Connection to Power Platform CLI
+
+#!pwsh
+
+# Power Platform CLI authentication
+Write-Host "Checking Power Platform CLI connection status..." -ForegroundColor Green
+
+$pacProfiles = pac auth list
+
+if ($pacProfiles -eq "No profiles were found on this computer. Please run 'pac auth create' to create one.") {
+    Write-Host "No profile found for Power Platform CLI. Creating a profile for '$environmentUrl'..." -ForegroundColor Blue
+    pac auth create --deviceCode --url $environmentUrl
+}
+
+Write-Host "👍🏼 Connected to Power Platform CLI!" -ForegroundColor Green

@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/vscode/devcontainers/dotnet:0-6.0
+FROM mcr.microsoft.com/vscode/devcontainers/dotnet:0-7.0
 
 # Install Azure CLI
 ARG INSTALL_AZURE_CLI="true"

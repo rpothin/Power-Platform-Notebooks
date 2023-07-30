@@ -32,20 +32,26 @@ Write-Host "👍🏼 Power Platform CLI is installed!" -ForegroundColor Green
 
 ### NuGet packages and namespaces
 
+> Specified version of "Microsoft.PowerPlatform.Dataverse.Client" due to a 'Could not load file or assembly System.ServiceModel.Primitives' error when trying to connect using more recent versions.
+
 #!csharp
 
 // Define NuGet source
 #i "nuget:https://api.nuget.org/v3/index.json"
 
 // Import latest version of NuGet packages
-#r "nuget:Microsoft.PowerPlatform.Dataverse.Client"
+#r "nuget:Microsoft.PowerPlatform.Dataverse.Client, 1.0.39"
 #r "nuget:Microsoft.Xrm.Sdk"
+#r "nuget:System.ServiceModel.Primitives"
 
 // Namespaces to work with Power Platform / Dataverse
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+
+// Other namespaces
+using System.ServiceModel;
 
 #!markdown
 
@@ -56,12 +62,26 @@ using Microsoft.Xrm.Sdk.Query;
 #!csharp
 
 // Input prompt to get the URL of the environment to reset, restore and clean
-string environmentUrl = await GetInputAsync("Please enter the full URL of the environment to reset, restore and clean.");
+string targetedEnvironmentUrl = await GetInputAsync("Please enter the full URL of the environment to reset, restore and clean.");
 
 #!pwsh
 
 # Propagate the URL of the environment to reset, restore and clean to PowerShell
-#!set --name environmentUrl --value @csharp:environmentUrl
+#!set --name targetedEnvironmentUrl --value @csharp:targetedEnvironmentUrl
+
+#!markdown
+
+### URL of the source environment for the backup restore
+
+#!csharp
+
+// Input prompt to get the URL of the source environment for the backup restore
+string sourceEnvironmentUrl = await GetInputAsync("Please enter the full URL of the source environment for the backup restore.");
+
+#!pwsh
+
+# Propagate the URL of the source environment for the backup restore to PowerShell
+#!set --name sourceEnvironmentUrl --value @csharp:sourceEnvironmentUrl
 
 #!markdown
 
@@ -70,13 +90,61 @@ string environmentUrl = await GetInputAsync("Please enter the full URL of the en
 #!pwsh
 
 # Power Platform CLI authentication
-Write-Host "Checking Power Platform CLI connection status..." -ForegroundColor Green
+Write-Host "Creating a profile of kind ADMIN..." -ForegroundColor Blue
 
-$pacProfiles = pac auth list
-
-if ($pacProfiles -eq "No profiles were found on this computer. Please run 'pac auth create' to create one.") {
-    Write-Host "No profile found for Power Platform CLI. Creating a profile for '$environmentUrl'..." -ForegroundColor Blue
-    pac auth create --deviceCode --url $environmentUrl
-}
+pac auth create --deviceCode --kind ADMIN
 
 Write-Host "👍🏼 Connected to Power Platform CLI!" -ForegroundColor Green
+
+#!markdown
+
+### Connection to Microsoft.PowerPlatform.Dataverse.Client
+
+> ⚠️ Unfortunately, this part currently does not work from GitHub Codespaces.
+
+#!csharp
+
+// Initialize a connection (service client) for the considered environment
+string connectionString = $"Url={targetedEnvironmentUrl};RedirectUri=http://localhost;LoginPrompt=Auto;AuthType=OAuth";
+
+ServiceClient serviceClient = new ServiceClient(connectionString);
+
+#!markdown
+
+## Refresh of the considered environment
+
+### Reset environment
+
+#!pwsh
+
+# Reset the considered environment
+Write-Host "Start of the reset of the '$targetedEnvironmentUrl' environment..." -ForegroundColor Green
+
+pac admin reset --environment $targetedEnvironmentUrl --async
+
+Write-Host "👍🏼 Reset operation completed!" -ForegroundColor Green
+
+#!pwsh
+
+# Montior the status of the reset operation previously launched
+pac admin status
+
+#!markdown
+
+### Restore environment
+
+> In this operation, we will restore the latest system backup of the source environment into the targeted one.
+
+#!pwsh
+
+# Restore the targeted environment with the latest backup from the source environment
+Write-Host "Start of the restore of the '$targetedEnvironmentUrl' environment from a backup of the '$sourceEnvironmentUrl' environment..." -ForegroundColor Green
+
+pac admin restore --selected-backup latest --source-env $sourceEnvironmentUrl --target-env $targetedEnvironmentUrl --async
+
+Write-Host "👍🏼 Restore operation completed!" -ForegroundColor Green
+
+#!pwsh
+
+# Montior the status of the reset operation previously launched
+pac admin status

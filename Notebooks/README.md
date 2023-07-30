@@ -9,9 +9,9 @@
 To be able to use the notebooks in this repository, you will need:
 - Option 1 (*local*)
    - [**VS Code**](https://code.visualstudio.com/)
-   - The [**.Net Interactive Notebooks**](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-interactive-vscode) extension installed
+   - The [**Polyglot Notebooks**](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-interactive-vscode) extension installed
 
-> Note: You will need the [**.NET 6 SDK**](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) to be able to use this extension.
+> Note: You will need the [**.NET 7 SDK**](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) to be able to use this extension.
 
 - Option 2: use [GitHub Codespaces](https://github.com/features/codespaces) with the **dev container** definition in this repository.
 

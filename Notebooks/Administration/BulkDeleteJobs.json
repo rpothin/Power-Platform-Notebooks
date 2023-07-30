@@ -1,0 +1,7 @@
+[
+    {
+        "JobName": "Succeeded and Canceled System Jobs created more than 7 days ago",
+        "FetchXmlQuery": "<fetch distinct='false' useraworderby='false' no-lock='false' mapping='logical'> <entity name='asyncoperation'> <attribute name='asyncoperationid' /> <filter type='and'> <condition attribute='createdon' operator='olderthan-x-days' value='7' /> <filter type='or'> <condition attribute='statuscode' operator='eq' value='30' /> <condition attribute='statuscode' operator='eq' value='32' /> </filter> </filter> </entity> </fetch>",
+        "StartHour": 21
+    }
+]

@@ -42,7 +42,8 @@ Write-Host "👍🏼 Power Platform CLI is installed!" -ForegroundColor Green
 // Import latest version of NuGet packages
 #r "nuget:Microsoft.PowerPlatform.Dataverse.Client, 1.0.39"
 #r "nuget:Microsoft.Xrm.Sdk"
-#r "nuget:System.ServiceModel.Primitives"
+#r "nuget:Newtonsoft.Json"
+//#r "nuget:System.ServiceModel.Primitives"
 
 // Namespaces to work with Power Platform / Dataverse
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -51,7 +52,9 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
 // Other namespaces
-using System.ServiceModel;
+using System.Globalization;
+using Newtonsoft.Json;
+//using System.ServiceModel;
 
 #!markdown
 
@@ -148,3 +151,84 @@ Write-Host "👍🏼 Restore operation completed!" -ForegroundColor Green
 
 # Montior the status of the reset operation previously launched
 pac admin status
+
+#!markdown
+
+### Deploy bulk delete jobs
+
+> ⚠️ Unfortunately, this part currently does not work from GitHub Codespaces.
+
+#!csharp
+
+// Get bulk delete jobs details from configuration file
+#!value --from-file ./BulkDeleteJobs.json --name bulkDeleteJobsDetailsJson
+
+#!csharp
+
+// Get content of configuration value extracted in raw value storage in a previous step
+#!set --value @value:bulkDeleteJobsDetailsJson --name bulkDeleteJobsDetailsJson
+
+public class BulkDeleteJobDetails {
+    public string JobName { get; set; }
+    public string FetchXmlQuery { get; set; }
+    public int StartHour { get; set; }
+};
+
+BulkDeleteJobDetails[] bulkDeleteJobsDetails = JsonConvert.DeserializeObject<BulkDeleteJobDetails[]>(bulkDeleteJobsDetailsJson);
+DateTime currentDateTime = DateTime.Now;
+
+// Go through each bulk delete job in the configuration file for creation in the environment
+foreach (BulkDeleteJobDetails bulkDeleteJobDetails in bulkDeleteJobsDetails) {
+    Console.WriteLine($"➡️ Start creation of following bulk delete job: {bulkDeleteJobDetails.JobName}");
+    // Initialize bulk delete request
+    FetchXmlToQueryExpressionRequest fetchXmlRequest = new FetchXmlToQueryExpressionRequest {
+        FetchXml = bulkDeleteJobDetails.FetchXmlQuery
+    };
+
+    FetchXmlToQueryExpressionResponse fetchXmlResponse = (FetchXmlToQueryExpressionResponse) serviceClient.Execute(fetchXmlRequest);
+
+    DateTime startDateTime = new DateTime(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day, bulkDeleteJobDetails.StartHour, 0, 0);
+
+    BulkDeleteRequest bulkDeleteRequest = new BulkDeleteRequest {
+        JobName = bulkDeleteJobDetails.JobName,
+        QuerySet = new QueryExpression[] {fetchXmlResponse.Query},
+        StartDateTime = startDateTime,
+        ToRecipients = new Guid[] { },
+        CCRecipients = new Guid[] { },
+        SendEmailNotification = false,
+        RecurrencePattern = "FREQ=DAILY;INTERVAL=1;"
+    };
+
+    // Check if bulk delete job exists and if yes delete them - update not really possible
+    QueryExpression searchForBulkDeleteOperationByName = new QueryExpression("bulkdeleteoperation");
+    searchForBulkDeleteOperationByName.ColumnSet = new ColumnSet(true);
+    searchForBulkDeleteOperationByName.Criteria.AddCondition("name", ConditionOperator.Equal, bulkDeleteRequest.JobName);
+    searchForBulkDeleteOperationByName.Criteria.AddCondition("isrecurring", ConditionOperator.Equal, true);
+
+    EntityCollection bulkDeleteOperations = serviceClient.RetrieveMultiple(searchForBulkDeleteOperationByName);
+
+    // Initialise object to be able to delete the async operation related to the considered bulk delete job
+    var asyncOperation = new Entity("asyncoperation");
+    asyncOperation["statecode"] = 3;
+    //asyncOperation["statuscode"] = 32;
+
+    if (bulkDeleteOperations != null && bulkDeleteOperations.Entities != null && bulkDeleteOperations.Entities.Count > 0) {
+        foreach (var bulkDeleteOperation in bulkDeleteOperations.Entities) {
+            EntityReference bulkDeleteJobAsyncOperation = (EntityReference) bulkDeleteOperation.Attributes["asyncoperationid"];
+            Console.WriteLine($"🧹 Delete bulk delete job(s) (+ related async operation) found with the following name: {bulkDeleteRequest.JobName} ({bulkDeleteOperation.Id})");
+            asyncOperation.Id = bulkDeleteJobAsyncOperation.Id;
+           
+            try {
+                serviceClient.Update(asyncOperation);
+            } catch {
+                // do nothing
+            }
+           
+            serviceClient.Delete(bulkDeleteOperation.LogicalName, bulkDeleteOperation.Id);
+        }
+    }
+
+    // Create bulk delete job
+    BulkDeleteResponse bulkDeleteResponse = (BulkDeleteResponse) serviceClient.Execute(bulkDeleteRequest);
+    Console.WriteLine($"✅ Bulk delete operation created: {bulkDeleteResponse.JobId}");
+}
